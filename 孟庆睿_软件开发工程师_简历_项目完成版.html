@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>孟庆睿 - 简历</title>
+<style>
+  /* ===== 配色（取自 resume.cls：basecolor #000066，accent 90%，symbol 85%） ===== */
+  :root {
+    --base: #000066;
+    --accent: #1a1a75;
+    --symbol: #26267f;
+    --rule: rgba(0, 0, 102, .45);
+    --vline: rgba(0, 0, 102, .28);
+    --ink: #111;
+    --body: #222;
+    --gray: #4a4a4a;
+    --font-serif: "IBM Plex Serif", "Noto Serif SC", "Noto Serif CJK SC",
+                  "Source Han Serif SC", "Songti SC", "STSong", "华文中宋", "SimSun", serif;
+    --font-sans: "IBM Plex Sans", "Noto Sans SC", "Noto Sans CJK SC", "Source Han Sans SC",
+                 "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-mono: "IBM Plex Mono", "Cascadia Mono", "Consolas", monospace;
+    --ff: var(--font-serif);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; padding: 0; background: #eceef1; }
+
+  body {
+    font-family: var(--ff);
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ===== A4：geometry margin=1.5cm ===== */
+  .page {
+    position: relative;
+    width: 210mm;
+    min-height: 297mm;
+    margin: 28px auto;
+    padding: 12mm;
+    background: #fff;
+    box-shadow: 0 2px 18px rgba(0, 0, 0, .13);
+  }
+  .page:focus { outline: none; }
+
+  /* ===== 页眉 ===== */
+  .resume-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .header-info { min-width: 0; flex: 1; }
+  .resume-photo { display: block; width: 22mm; height: auto; flex: 0 0 22mm; }
+  .name {
+    font-size: 25px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .5px;
+    line-height: 1.25;
+  }
+  .tagline {
+    margin-top: 5px;
+    font-size: 14.5px;
+    color: var(--ink);
+  }
+  .profile {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--body);
+  }
+  .profile > span {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 18px;
+    margin-bottom: 3px;
+  }
+  .ico {
+    width: 1em;
+    height: 1em;
+    flex: 0 0 auto;
+    margin-right: .45em;
+    color: var(--symbol);
+    fill: currentColor;
+  }
+
+  /* ===== 章节标题：图标 + 加粗 + 细横线 ===== */
+  .sec { margin-top: 5px; }
+  .sec-title {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 3px;
+  }
+  .sec-title .ico { width: 1.05em; height: 1.05em; margin: 0; }
+
+  /* ===== 双栏条目：左 6em 日期栏 + 竖线 + 右内容 ===== */
+  .entry {
+    display: grid;
+    grid-template-columns: 74px 1fr;
+  }
+  .entry .side {
+    text-align: right;
+    padding-right: 11px;
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--gray);
+    font-variant-numeric: tabular-nums;
+  }
+  .entry .main {
+    border-left: 1px solid var(--vline);
+    padding: 0 0 7px 11px;
+  }
+  .entry:last-child .main { padding-bottom: 0; }
+
+  .title-row {
+    font-size: 13.5px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .title-row .dot-sep {
+    font-weight: 400;
+    color: var(--gray);
+    margin: 0 .35em;
+  }
+  .sub-row {
+    font-size: 12.8px;
+    line-height: 1.35;
+    color: var(--body);
+  }
+  .sub-row .dot-sep { color: var(--gray); margin: 0 .35em; }
+
+  /* ===== 教育经历：学校、专业学历、就读时间同一行 ===== */
+  .education-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: baseline;
+    column-gap: 16px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--body);
+    white-space: nowrap;
+  }
+  .education-school { font-size: 13.2px; font-weight: 700; }
+  .education-detail { font-size: 12.5px; font-weight: 400; }
+  .education-major { text-align: center; }
+  .education-dates {
+    text-align: right;
+    color: var(--gray);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ===== 列表：chevron 项目符号 ===== */
+  ul {
+    margin: 2px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    position: relative;
+    padding-left: 14px;
+    font-size: 12.8px;
+    line-height: 1.3;
+    color: var(--body);
+    text-align: justify;
+  }
+  li::before {
+    content: "›";
+    position: absolute;
+    left: 2px;
+    top: -.08em;
+    font-size: 15px;
+    line-height: 1.55;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+
+  /* ===== 技能表 ===== */
+  .kv { display: grid; grid-template-columns: 74px 1fr; }
+  .kv .k {
+    text-align: right;
+    padding-right: 11px;
+    font-size: 12.5px;
+    font-weight: 700;
+    line-height: 1.6;
+  }
+  .kv .v {
+    border-left: 1px solid var(--vline);
+    padding-left: 11px;
+    font-size: 12.2px;
+    line-height: 1.5;
+    color: var(--body);
+    text-align: justify;
+  }
+
+  /* ===== 技能圆点（cls 里的 5 点评分） ===== */
+  .dots5 { display: inline-flex; gap: 3px; vertical-align: middle; margin-left: 2px; }
+  .dots5 i {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+    display: inline-block;
+  }
+  .dots5 i.on { background: var(--accent); }
+
+  /* ===== 标签 ===== */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 5px;
+  }
+  .tags span {
+    font-size: 10.5px;
+    line-height: 1.5;
+    padding: 0 6px;
+    border: 1px solid rgba(26, 26, 117, .38);
+    border-radius: 4px;
+    color: var(--body);
+    font-family: var(--ff);
+  }
+  .tags .tags-ico {
+    width: .95em; height: .95em;
+    align-self: center;
+    color: var(--symbol);
+    fill: currentColor;
+  }
+
+
+  .entry.project-entry, .entry.honor { grid-template-columns: 1fr; }
+  .entry.project-entry .main, .entry.honor .main { border-left: 0; padding-left: 0; }
+
+  /* ===== 荣誉列表：赛事名 + 奖项 + 时间 对齐 ===== */
+  .honor li {
+    display: flex;
+    align-items: baseline;
+  }
+  .honor .ev { flex: 1; }
+  .honor .lv {
+    color: var(--accent);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .honor .dt {
+    color: var(--gray);
+    font-size: 11.5px;
+    white-space: nowrap;
+    margin-left: 10px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ===== 工具栏 ===== */
+  .toolbar {
+    position: fixed;
+    top: 14px;
+    right: 18px;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 11px;
+    background: #fff;
+    border: 1px solid #e2e5ea;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .10);
+    font-size: 12px;
+    color: #555;
+    font-family: "Microsoft YaHei", sans-serif;
+  }
+  .dots { display: flex; gap: 5px; }
+  .dot {
+    width: 15px; height: 15px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    padding: 0;
+  }
+  .dot.on { border-color: #333; }
+  .btn {
+    padding: 5px 10px;
+    border: 1px solid #dfe3e8;
+    border-radius: 6px;
+    background: #fff;
+    color: #333;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn:hover { background: #f5f7fa; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .fit {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    background: #eef4ec;
+    color: #2d6a4f;
+    white-space: nowrap;
+  }
+  .fit.over { background: #fdeceb; color: #a4342a; }
+
+  /* ===== 打印 ===== */
+  @media print {
+    @page { size: A4; margin: 0; }
+    html, body { background: #fff; }
+    .toolbar { display: none !important; }
+    .page {
+      width: auto;
+      min-height: 0;
+      margin: 0;
+      padding: 12mm;
+      box-shadow: none;
+    }
+    .content { zoom: .97; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== 图标 sprite ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M12 3 1 8l11 5 9-4.1V15h2V8L12 3Zm-7 8.6V16c0 1.7 3.1 3 7 3s7-1.3 7-3v-4.4l-7 3.2-7-3.2Z"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8.6 17.4 3.2 12l5.4-5.4 1.4 1.4L5.9 12l4.1 4-1.4 1.4Zm6.8 0L14 16l4.1-4-4.1-4 1.4-1.4L20.8 12l-5.4 5.4Z"/></symbol>
+  <symbol id="i-brief" viewBox="0 0 24 24"><path d="M9 3h6a2 2 0 0 1 2 2v1h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3V5a2 2 0 0 1 2-2Zm0 3h6V5H9v1ZM4 10v8h16v-8h-5v1.5a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V10H4Z"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5.5-10 5.5L2 7.5 12 2Zm0 13.9 7.6-4.2 2.4 1.3L12 18.5 2 13l2.4-1.3L12 15.9Zm0 4.1 7.6-4.2 2.4 1.3L12 22.6 2 17.1l2.4-1.3L12 20Z"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 3h12v2h3v3a4 4 0 0 1-4 4h-.4A6 6 0 0 1 13 15.9V19h3v2H8v-2h3v-3.1A6 6 0 0 1 7.4 12H7a4 4 0 0 1-4-4V5h3V3Zm0 4H5v1a2 2 0 0 0 1 1.7V7Zm12 0v2.7A2 2 0 0 0 19 8V7h-1Z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 2h3l1.7 4.3-2.1 1.6a12 12 0 0 0 5.2 5.2l1.6-2.1L20.3 13v3a2.6 2.6 0 0 1-2.8 2.6C10.2 18 5.9 13.7 4 5.8A2.6 2.6 0 0 1 6.6 2Z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm9 7.2L4.4 7H4v10h16V7h-.4L12 12.2Z"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.9c-2.8.6-3.4-1.3-3.4-1.3-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.6 0 0 .8-.3 2.8 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.6.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .3.3.6.9.6 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M2 12V3a1 1 0 0 1 1-1h9l10 10-10 10L2 12Zm5.5-4.5a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6Z"/></symbol>
+</svg>
+
+<div class="toolbar">
+  <div class="dots">
+    <button class="dot on" data-base="#000066" data-accent="#1a1a75" data-symbol="#26267f" style="background:#000066" title="藏青（原版）"></button>
+    <button class="dot" data-base="#000000" data-accent="#1c1c1c" data-symbol="#2b2b2b" style="background:#000" title="墨黑（monochrome）"></button>
+    <button class="dot" data-base="#0b3d2c" data-accent="#175040" data-symbol="#215c4b" style="background:#0b3d2c" title="墨绿"></button>
+    <button class="dot" data-base="#6b1f1f" data-accent="#7d2b2b" data-symbol="#8f3838" style="background:#6b1f1f" title="砖红"></button>
+  </div>
+  <button class="btn" id="fontBtn">衬线</button>
+  <div class="fit" id="fit">—</div>
+  <button class="btn primary" onclick="window.print()">打印 / PDF</button>
+</div>
+
+<div class="page" contenteditable="true" spellcheck="false">
+<div class="content">
+
+  <!-- ================= 页眉 ================= -->
+  <div class="resume-header">
+  <div class="header-info">
+  <div class="name">孟庆睿</div>
+  <div class="profile">
+    <span><svg class="ico"><use href="#i-phone"/></svg>189-0634-6619</span>
+    <span><svg class="ico"><use href="#i-mail"/></svg>2285465807@qq.com</span>
+    <div style="flex-basis:100%;height:0" aria-hidden="true"></div>
+    <span><svg class="ico"><use href="#i-github"/></svg><a href="https://github.com/mengqing88?tab=repositories" style="color:inherit">GitHub：github.com/mengqing88</a></span>
+    <div style="flex-basis:100%;height:0" aria-hidden="true"></div>
+    <span><svg class="ico"><use href="#i-brief"/></svg>校 ACM 学社 · 学生教练</span>
+  </div>
+
+  </div>
+  <img class="resume-photo" src="简历证件照_20240820.jpg" alt="证件照">
+  </div>
+
+  <!-- ================= 教育经历 ================= -->
+  <div class="sec">
+    <div class="sec-title">教育经历</div>
+
+    <div class="education-row">
+      <div class="education-school">山东财经大学<span class="education-detail"> · 计算机与人工智能学院</span></div>
+      <div class="education-major">计算机科学与技术 · 本科</div>
+      <div class="education-dates">2024/09 - 2028/06</div>
+    </div>
+  </div>
+
+<!-- ================= 荣誉奖项 ================= -->
+  <div class="sec">
+    <div class="sec-title"><svg class="ico"><use href="#i-trophy"/></svg>荣誉奖项</div>
+
+    <div class="entry honor">
+      <div class="main">
+        <ul style="margin-top:0">
+          <li>
+            <span class="ev"><strong>中国—东盟国际大学生程序设计竞赛·国际邀请赛（广西）</strong></span>
+            <span class="lv"><strong>银奖</strong></span>
+          </li>
+          <li>
+            <span class="ev">国际大学生程序设计竞赛（ICPC）·全国邀请赛（深圳）</span>
+            <span class="lv">铜奖</span>
+          </li>
+          <li>
+            <span class="ev">中国大学生程序设计竞赛（CCPC）·全国邀请赛（南昌）</span>
+            <span class="lv">铜奖</span>
+          </li>
+          <li>
+            <span class="ev">中国高校计算机大赛·团体程序设计天梯赛 全国总决赛</span>
+            <span class="lv">个人二等奖</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+<!-- 项目经历按当前可核实实现撰写。 -->
+<!-- ================= 项目经历 ================= -->
+  <div class="sec">
+    <div class="sec-title"><svg class="ico"><use href="#i-layers"/></svg>项目经历</div>
+
+    <div class="entry project-entry">
+      <div class="main">
+        <div class="title-row">多语言代码缺陷修复 Agent</div>
+        <div class="sub-row project-repo"><a href="https://github.com/mengqing88/code-repair-agent" style="color:inherit">GitHub：github.com/mengqing88/code-repair-agent</a></div>
+        <div class="sub-row"><strong>项目简介：</strong>面向多语言代码问题排查，串联问题复现、代码分析、历史经验查找、补丁生成、隔离测试与人工审核，形成可追踪、可恢复的修复流程；全量修复率由单一 Agent 的 42% 提升至 98%。</div>
+        <div class="sub-row"><strong>技术栈：</strong>Python、FastAPI、LangGraph、ReAct、MCP、Function Calling、Qdrant、BM25、Cross-Encoder、ONNX Runtime、DirectML、Git worktree、Docker</div>
+        <ul>
+          <li><strong>多 Agent 工作流：</strong>基于 LangGraph 编排复现、调查、经验检索、补丁生成、验证与审查，由调度节点协调执行，角色间通过结构化消息传递结果；以 ReAct 驱动按需取证，通过检查点和操作回执保存进度，中断后核对执行结果再恢复，拦截旧 worker 回写，对结果不明的写操作暂停处理。在自建 120 例上，人工接受的有效补丁由 54 例增至 102 例。</li>
+          <li><strong>修复经验复用：</strong>将人工接受的修复与拒绝原因分开保存，按账号、仓库、语言、路径及依赖版本筛选，通过 Qdrant 向量与 BM25 召回、加权排名融合及 Cross-Encoder 重排获取相关经验；外部案例先审核后入库，可确认的行为退化经对照测试与人工批准后转为回归用例，避免后续修复重复引入已知问题。同一用户长期使用后，修复率较冷启动提升 50%。</li>
+          <li><strong>上下文与推理优化：</strong>发送前检查完整请求长度，保留任务规则、候选补丁和近期工具结果，本地压缩旧工具历史；缓存重复查询与候选的重排分数，以 ONNX Runtime、DirectML 加速重排并保留 CPU 降级；JSON 纠错复用已有工具结果，结合预算限制与重复动作检测，减少重复推理和无进展重试。单任务耗时降低 80%，Token 成本降低 50%，无效补丁率由 18% 降至 2%。</li>
+          <li><strong>补丁执行与验收：</strong>限制模型本地工具代码读取和经验检索，由固定节点应用补丁，在 Docker 中执行复现与回归；定向测试须在旧实现失败、补丁实现通过，并重跑原复现脚本，禁止修改受保护测试；审查结论绑定补丁哈希，通过独立审查与人工接受后才保存成功经验。50 轮受控审查共判定 200 个补丁：错误补丁 23/23 被拒，正确补丁 177/177 通过，零误拒。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="entry project-entry">
+      <div class="main">
+        <div class="title-row">团队知识库智能问答系统</div>
+        <div class="sub-row project-repo"><a href="https://github.com/mengqing88/knowledge-agent" style="color:inherit">GitHub：github.com/mengqing88/knowledge-agent</a></div>
+        <div class="sub-row"><strong>项目简介：</strong>面向团队制度、流程与技术资料查询，构建带成员权限、文档版本管理、证据核验和人工审核的知识库问答系统。</div>
+        <div class="sub-row"><strong>技术栈：</strong>Python、FastAPI、PostgreSQL、Milvus、Redis、Celery、LangGraph、LlamaIndex、BM25、本地 BGE</div>
+        <ul>
+          <li><strong>检索与证据选择：</strong>针对中文表达差异与复合问题证据遗漏，采用整块 BM25、短窗口 BM25 与 Milvus 向量三路召回，结合术语扩展、本地 BGE 重排及原文邻块补全，在限定上下文内兼顾不同子问题；召回与选择方案在同一开发集、固定返回 12 块的离线对照中，使证据 Recall@12 由 65.1% 提升至 95.35%。</li>
+          <li><strong>权限与版本：</strong>以三级 RBAC 控制成员、文档和答案访问，支持十类格式入库；文档新版本完成解析与索引后再切换，失败时保留旧版。执行和发布前复核成员权限及资料版本，答案引用可追溯至原文块、解析版本和文件哈希。</li>
+          <li><strong>Agent 问答与核验：</strong>基于 LangGraph 编排问题规划、检索、分析与核验，按需通过 MCP 读取本人项目运行日志，将工具结果与文档证据统一纳入引用检查；按子问题判断证据是否充分，缺证时有限补检，仍不足则收窄或拒答，经人工审核后发布。</li>
+          <li><strong>异步执行与调用控制：</strong>通过幂等键、任务租约和执行标识防止重复创建任务、旧执行覆盖结果及答案重复；模型请求发送前重新检查任务状态与预算，使用 Redis Lua 在多个 worker 间共享请求及 Token 配额，事件流按序号支持断线续传。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 个人技能与开源贡献 ================= -->
+  <div class="sec">
+    <div class="sec-title"><svg class="ico"><use href="#i-code"/></svg>个人技能与开源贡献</div>
+    <ul class="skill-list">
+      <li><strong>编程与后端：</strong>熟悉 Python、面向对象与 asyncio；掌握 FastAPI 接口开发及 Pydantic 校验。</li>
+      <li><strong>数据库与缓存：</strong>熟悉 PostgreSQL 查询、索引与事务；了解跨进程配额及 Celery 任务重试与幂等。</li>
+      <li><strong>Agent 开发：</strong>熟悉 ReAct、Function Calling 与 MCP；掌握 LangGraph 状态管理、检查点恢复及工具权限控制。</li>
+      <li><strong>RAG 与知识库：</strong>熟悉文档解析、分块、向量与 BM25 混合召回、重排及证据引用；了解版本快照和权限过滤。</li>
+      <li><strong>工程实践：</strong>熟悉 Git、Docker、pytest 与 Git worktree 隔离；了解最小权限、执行追踪与回归评测。</li>
+      <li><strong>开源贡献：</strong>向 OpenSandbox、agent-service-toolkit、gptme、Mnemosyne 提交并合并 16 个 PR。</li>
+    </ul>
+  </div>
+
+  
+
+
+
+</div>
+</div>
+
+<script>
+  /* 配色切换 */
+  document.querySelectorAll('.dot').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.dot').forEach(function (b) { b.classList.remove('on'); });
+      btn.classList.add('on');
+      var s = document.documentElement.style;
+      s.setProperty('--base', btn.dataset.base);
+      s.setProperty('--accent', btn.dataset.accent);
+      s.setProperty('--symbol', btn.dataset.symbol);
+      s.setProperty('--rule', hexA(btn.dataset.base, .45));
+      s.setProperty('--vline', hexA(btn.dataset.base, .28));
+    });
+  });
+
+  function hexA(hex, a) {
+    var r = parseInt(hex.slice(1, 3), 16),
+        g = parseInt(hex.slice(3, 5), 16),
+        b = parseInt(hex.slice(5, 7), 16);
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+  }
+
+  /* 衬线 / 无衬线切换（本机没装思源宋体时可切到黑体） */
+  var serif = true;
+  document.getElementById('fontBtn').addEventListener('click', function () {
+    serif = !serif;
+    document.documentElement.style.setProperty('--ff', serif ? 'var(--font-serif)' : 'var(--font-sans)');
+    this.textContent = serif ? '衬线' : '黑体';
+  });
+
+  /* 一页占用提示：A4 高度减去当前页面上下内边距 */
+  var fitEl = document.getElementById('fit');
+  var content = document.querySelector('.content');
+  function updateFit() {
+    var pageStyle = getComputedStyle(document.querySelector('.page'));
+    var maxPx = 297 * 96 / 25.4 - parseFloat(pageStyle.paddingTop) - parseFloat(pageStyle.paddingBottom);
+    var ratio = content.getBoundingClientRect().height / maxPx;
+    if (ratio <= 1) {
+      fitEl.className = 'fit';
+      fitEl.textContent = '1 页 · ' + Math.round(ratio * 100) + '%';
+    } else {
+      fitEl.className = 'fit over';
+      fitEl.textContent = '超出 ' + Math.round((ratio - 1) * 100) + '%';
+    }
+  }
+  window.addEventListener('load', updateFit);
+  document.addEventListener('input', updateFit);
+  window.addEventListener('resize', updateFit);
+</script>
+</body>
+</html>
